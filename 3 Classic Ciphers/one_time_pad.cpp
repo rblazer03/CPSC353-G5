@@ -12,10 +12,22 @@ int main(void)
     
     string message;
     string key;
+    bool check = false;
 
-    printf("Enter a message: ");
-    getline(cin, message);
-    transform(message.begin(), message.end(), message.begin(), ::toupper);
+    while (check == false)
+    {
+        check = true;
+        printf("Enter a message: ");
+        getline(cin, message);
+        transform(message.begin(), message.end(), message.begin(), ::toupper);
+        for (int i = 0; i < message.length(); i++)
+        {
+            if (!isalpha(message[i]) && !isspace(message[i]))
+            {
+                check = false;
+            }
+        }
+    }
     ofstream Message("Message.txt");
     Message << message;
     Message.close();
@@ -32,17 +44,31 @@ int main(void)
     Key << key;
     Key.close();
 
-    // printf("Message: %s\n", message.c_str());
-    // printf("Key: %s\n", key.c_str());
+    printf("Original Message: %s\n", message.c_str());
+    printf("Key: %s\n", key.c_str());
+    
     
     ofstream Encrypt("Encrypt.txt");
     for (int i = 0; i < message.length(); i++)
     {
-        char newChar = (((message[i] - 'A') + (key[i] - 'A')) % 26) + 'A';
+        // if char
+        if(isspace(message[i]))
+        {
+            message[i] += 59;
+        }
+        if(isspace(key[i]))
+        {
+            key[i] += 59;
+        }
+        char newChar = (((message[i] - 'A') + (key[i] - 'A')) % 27) + 'A';
+        if (newChar == '['){
+            newChar -= 59;
+        }
         printf("NewChar: %c\n", newChar);
         Encrypt << newChar ;
     }
     Encrypt.close();
+
 
     return 0;
 }
