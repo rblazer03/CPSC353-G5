@@ -50,20 +50,6 @@ int main(void)
     Message << message;
     Message.close();
 
-    // // user is prompted to for the key they want to use for encryting/decrypting
-    // printf("Enter a key: ");
-    //     //input gotten from terminal
-    //     getline(cin, key);
-    //     // make all character in the message uppercase
-    //     transform(key.begin(), key.end(), key.begin(), ::toupper);
-    // while (key.length() != message.length())
-    // {
-        
-    //     printf("Key must be equal to message length.\n");
-    //     printf("Enter a key: ");
-    //     getline(cin, key);
-    //     transform(key.begin(), key.end(), key.begin(), ::toupper);
-    // }
     // controls continuation of error checking for loop
     bool check2 = false;
 
