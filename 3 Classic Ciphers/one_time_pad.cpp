@@ -5,6 +5,9 @@
 #include <cctype> // for using toupper 
 using namespace std;
 
+void Encrypt(string message, string key);
+void Decrypt(string message, string key);
+
 int main(void)
 {
     // reading and writing to files
