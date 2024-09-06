@@ -89,7 +89,7 @@ int main(void)
         {
             key[i] += 59;
         }
-        char newChar = (((message[i] - 'A') - (key[i] - 'A')) % 27) + 'A';
+        char newChar = ((((message[i] - 'A') - (key[i] - 'A')) +27)% 27) + 'A';
         if (newChar == '['){
             newChar -= 59;
         }
