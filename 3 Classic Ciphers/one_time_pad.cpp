@@ -25,6 +25,8 @@ int main(void)
             if (!isalpha(message[i]) && !isspace(message[i]))
             {
                 check = false;
+                printf("You can only use alphabetical letters and spaces.\n");
+                break;
             }
         }
     }
@@ -32,13 +34,16 @@ int main(void)
     Message << message;
     Message.close();
 
-    
+    printf("Enter a key: ");
+        getline(cin, key);
+        transform(key.begin(), key.end(), key.begin(), ::toupper);
     while (key.length() != message.length())
     {
+        
+        printf("Key must be equal to message length.\n");
         printf("Enter a key: ");
         getline(cin, key);
         transform(key.begin(), key.end(), key.begin(), ::toupper);
-        printf("Key must be equal to message length.\n");
     }
     ofstream Key("Key.txt");
     Key << key;
@@ -51,7 +56,6 @@ int main(void)
     ofstream Encrypt("Encrypt.txt");
     for (int i = 0; i < message.length(); i++)
     {
-        // if char
         if(isspace(message[i]))
         {
             message[i] += 59;
@@ -64,11 +68,40 @@ int main(void)
         if (newChar == '['){
             newChar -= 59;
         }
-        printf("NewChar: %c\n", newChar);
-        Encrypt << newChar ;
+        Encrypt << newChar;
     }
     Encrypt.close();
 
+    string encrypted;
+    ifstream Encrypted("Encrypt.txt");
+    getline(Encrypted, encrypted);
+    printf("Encrypted Message: %s\n", encrypted.c_str());
+    Encrypted.close();
+
+    ofstream Decrypt("Decrypt.txt");
+    for (int i = 0; i < message.length(); i++)
+    {
+        if(isspace(message[i]))
+        {
+            message[i] += 59;
+        }
+        if(isspace(key[i]))
+        {
+            key[i] += 59;
+        }
+        char newChar = (((message[i] - 'A') - (key[i] - 'A')) % 27) + 'A';
+        if (newChar == '['){
+            newChar -= 59;
+        }
+        Decrypt << newChar;
+    }
+    Decrypt.close();
+
+    string decrypted;
+    ifstream Decrypted("Decrypt.txt");
+    getline(Decrypted, decrypted);
+    printf("Decrypted Message: %s\n", decrypted.c_str());
+    Decrypted.close();
 
     return 0;
 }
