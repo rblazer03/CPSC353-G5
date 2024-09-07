@@ -5,10 +5,11 @@
 #include <cctype> // for using toupper 
 using namespace std;
 
+// function initializers
 void Encrypt(string message, string key);
 void Decrypt(string message, string key);
 
-int main(void)
+int main(int argc, char* argv[])
 {
     // reading and writing to files
     fstream fin;
@@ -17,11 +18,12 @@ int main(void)
     // initalizer for the user inputed message and key
     string message;
     string key;
+    string choice = argv[1];
+    transform(choice.begin(), choice.end(), choice.begin(), ::toupper);
 
     // controls continuation of error checking for loop
-    bool check = false;
-
     // check is set to false initially to enter the for loop
+    bool check = false;
     while (check == false)
     {
         // check is changed to true so the while loop can exit if all characters in the message are valid
@@ -54,9 +56,8 @@ int main(void)
     Message.close();
 
     // controls continuation of error checking for loop
-    bool check2 = false;
-
     // check is set to false initially to enter the for loop
+    bool check2 = false;
     while (check2 == false)
     {
         // check is changed to true so the while loop can exit if all characters in the message are valid
@@ -102,7 +103,27 @@ int main(void)
     // users original message and chosen key is printed in the terminal
     printf("Original Message: %s\n", message.c_str());
     printf("Key: %s\n", key.c_str());
+
+    // encrypt of decrypt the message based on user choice
+    if (choice == "ENCRYPT")
+    {
+        Encrypt(message, key);
+    }
+    else if (choice == "DECRYPT")
+    {
+        Decrypt(message, key);
     
+    }
+    else
+    {
+        printf("Invalid option");
+    }
+
+    return 0;
+}
+
+void Encrypt(string message, string key)
+{
     // open file 'Encrypt.txt'
     ofstream Encrypt("Encrypt.txt");
     // encrypt each letter of the message individually
@@ -139,7 +160,10 @@ int main(void)
     // the encrypted message is printed to the terminal
     printf("Encrypted Message: %s\n", encrypted.c_str());
     Encrypted.close();
+}
 
+void Decrypt(string message, string key)
+{
     ofstream Decrypt("Decrypt.txt");
     for (int i = 0; i < message.length(); i++)
     {
@@ -175,6 +199,4 @@ int main(void)
     // the decrypted message is printed to the terminal
     printf("Decrypted Message: %s\n", decrypted.c_str());
     Decrypted.close();
-
-    return 0;
 }
