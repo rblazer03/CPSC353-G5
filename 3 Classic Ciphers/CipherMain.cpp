@@ -2,9 +2,12 @@
 #include <string>
 #include <cctype>
 #include <fstream>
-#include <algorithm>
+#include <algorithm> // for using transform 
+#include <cctype> // for using toupper
 #include "CeasarCipher.cpp"
 #include "Vigenère_Cipher.cpp"
+#include "one_time_pad.cpp"
+#include "one_time_pad_tests.cpp"
 
 using namespace std;
 
@@ -38,6 +41,7 @@ int main(int argc, char *argv[]) {
 
 
         if(cipher == "1") {
+            // loops
             while(mode != "ENCRYPT" || mode != "DECRYPT") {
                 cout << "Choose a mode: Encrypt or Decrypt" << endl;
                 getline(cin, mode);
@@ -102,17 +106,23 @@ int main(int argc, char *argv[]) {
             }
 
         }
-
-        /*
-        if (cipher == 3) {
-        
+        if (cipher == "3") 
+        {
             while (mode != "ENCRYPT" || mode != "DECRYPT" || mode != "TEST") {
                 cout << "Choose a mode: Encrypt, Decrypt, or Test?" << endl;
                 getline(cin, mode);
                 transform(mode.begin(), mode.end(), mode.begin(), ::toupper);
-                if(mode == "ENCRYPT" || mode == "DECRYPT" || mode == "TEST")
+                if(mode == "TEST")
+                {
+                    test_main();
+                    break;
+                }
+                if(mode == "ENCRYPT" || mode == "DECRYPT")
+                {
                     input = checkMessage();
                     otp_main(mode, input);
+                    break;
+                }
                 else
                 {
                     cout << "Invalid mode: Enter Encrypt, Decrypt, or Test" << std::endl;
@@ -120,7 +130,7 @@ int main(int argc, char *argv[]) {
             }
 
         }
-        */
+        
         if(cipher == "4") {
             cout << "Goodbye!" << endl;
             cond = false;
@@ -250,23 +260,47 @@ int main(int argc, char *argv[]) {
         }
     }
     */
-    /*
-    if (cipher == 3) {
     
-        while (mode != "ENCRYPT" || mode != "DECRYPT" || mode != "TEST") {
-            cout << "Choose a mode: Encrypt, Decrypt, or Test?" << endl;
-            getline(cin, mode);
-            transform(mode.begin(), mode.end(), mode.begin(), ::toupper);
-            if(mode == "ENCRYPT" || mode == "DECRYPT" || mode == "TEST")
-                input = checkMessage();
-                otp_main(mode, input);
-            else
+    
+    return 0;
+}
+
+string checkMessage(){
+    fstream fin;
+    string message;
+    // controls continuation of error checking for loop
+    // check is set to false initially to enter the for loop
+    bool check = false;
+    while (check == false)
+    {
+        // check is changed to true so the while loop can exit if all characters in the message are valid
+        check = true;
+        // user prompted for the message they wish to encrypt/decrypt
+        printf("Enter a message: ");
+        // input gotten from terminal
+        getline(cin, message);
+        // make all character in the message uppercase
+        transform(message.begin(), message.end(), message.begin(), ::toupper);
+
+        // chech each character to ensure it is a letter or a space
+        for (int i = 0; i < message.length(); i++)
+        {
+            // if the character is not a letter or space
+            if (!isalpha(message[i]) && !isspace(message[i]))
             {
-                cout << "Invalid mode: Enter Encrypt, Decrypt, or Test" << std::endl;
+                // check is changed to false continuing the while loop and re-prompting the user
+                check = false;
+                // error message is given
+                printf("You can only use alphabetical letters and spaces.\n");
+                // break from for loop
+                break;
             }
         }
-
     }
-    */
-    return 0;
+    // the user entered message is written into file 'Message.txt'
+    ofstream Message("Message.txt");
+    Message << message;
+    Message.close();
+
+    return message;
 }
