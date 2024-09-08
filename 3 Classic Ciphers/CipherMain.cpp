@@ -2,16 +2,11 @@
 #include <string>
 #include <cctype>
 #include <fstream>
-#include <algorithm> // for using transform 
-#include <cctype> // for using toupper
+#include <algorithm>
 #include "CeasarCipher.cpp"
 #include "Vigenère_Cipher.cpp"
-#include "one_time_pad.cpp"
-#include "one_time_pad_tests.cpp"
 
 using namespace std;
-
-string checkMessage(void);
 
 bool is_valid_message(const string &text) {
     for (char c : text) {
@@ -32,16 +27,142 @@ int main(int argc, char *argv[]) {
     string key1;
     int key;
     string cipher;
+    bool cond = true;
+    while(cond == true) {
+        cout << "What Cipher do you want to do?" << endl;
+        cout << "1. Caesar Cipher" << endl;
+        cout << "2. Vigenère_Cipher" << endl;
+        cout << "3. One Time Pad" << endl;
+        cout << "4. Exit program" << endl;
+        getline(cin, cipher);
 
-    cout << "What Cipher do you want to do?" << endl;
-    cout << "1. Caesar Cipher" << endl;
-    cout << "2. Vigenère_Cipher" << endl;
-    cout << "3. One Time Pad" << endl;
-    getline(cin, cipher);
-    //cin >> cipher;
-    //getline(cin, cipher);
 
+        if(cipher == "1") {
+            while(mode != "ENCRYPT" || mode != "DECRYPT") {
+                cout << "Choose a mode: Encrypt or Decrypt" << endl;
+                getline(cin, mode);
+                transform(mode.begin(), mode.end(), mode.begin(), ::toupper);
+                if(mode == "ENCRYPT" || mode == "DECRYPT") {
+                    cout << "What is your key?" << endl;
+                    getline(cin, key1);
+                    if (!is_valid_message(key1)) {
+                        cout << "Invalid key. The key must be an uppercase letter (A-Z) or a space." << endl;
+                    }
+                    key = string_to_index(key1);
+                    cout << "What is your message?" << endl;
+                    getline(cin, input);
+                    input = to_uppercase(input);
+                    if (!is_valid_message(input)) {
+                        cout << "Invalid message. Only letters (A-Z) and spaces are allowed." << endl;
+                    }
+                    if(mode == "ENCRYPT"){
+                        string ciphertext = caesar_encrypt(input, key);
+                        cout << "Key: " << key1 << "\nCiphertext: " << ciphertext << "\n";
+                    }
+                    else if(mode == "DECRYPT"){
+                        string plaintext = caesar_decrypt(input, key);
+                        cout << "Key: " << key1 << "\nPlaintext: " << plaintext << "\n";
+                    }
+                }
+                else{
+                cout << "Invalid mode, use ENCRYPT or DECRYPT" << std::endl;
+                }
+            }
+        }
+        if (cipher == "2") {
+            while(mode != "ENCRYPT" || mode != "DECRYPT") {
+                cout << "Choose a mode: Encrypt or Decrypt" << endl;
+                getline(cin, mode);
+                transform(mode.begin(), mode.end(), mode.begin(), ::toupper);
+                if(mode == "ENCRYPT" || mode == "DECRYPT") {
+                    cout << "What is your key?" << endl;
+                    getline(cin, key1);
+                    if (!is_valid_message(key1)) {
+                        cout << "Invalid key. The key must be an uppercase letter (A-Z) or a space." << endl;
+                    }
+                    key = string_to_index(key1);
+                    cout << "What is your message?" << endl;
+                    getline(cin, input);
+                    input = to_uppercase(input);
+                    if (!is_valid_message(input)) {
+                        cout << "Invalid message. Only letters (A-Z) and spaces are allowed." << endl;
+                    }
+                    if(mode == "ENCRYPT"){
+                        string ciphertext = vig_encryption(input, multiKey);
+                        cout << "Key: " << multiKey << "\nCiphertext: " << ciphertext << "\n";
+                    }
+                    else if(mode == "DECRYPT"){
+                        string plaintext = vig_decryption(input, multiKey);
+                        cout << "Key: " << multiKey << "\nPlaintext: " << plaintext << "\n"; 
+                    }
+                }
+                else{
+                    cout << "Invalid mode, use ENCRYPT or DECRYPT" << std::endl;
+                }
+            }
+
+        }
+
+        /*
+        if (cipher == 3) {
+        
+            while (mode != "ENCRYPT" || mode != "DECRYPT" || mode != "TEST") {
+                cout << "Choose a mode: Encrypt, Decrypt, or Test?" << endl;
+                getline(cin, mode);
+                transform(mode.begin(), mode.end(), mode.begin(), ::toupper);
+                if(mode == "ENCRYPT" || mode == "DECRYPT" || mode == "TEST")
+                    input = checkMessage();
+                    otp_main(mode, input);
+                else
+                {
+                    cout << "Invalid mode: Enter Encrypt, Decrypt, or Test" << std::endl;
+                }
+            }
+
+        }
+        */
+        if(cipher == "4") {
+            cout << "Goodbye!" << endl;
+            cond = false;
+        }
+
+        else {
+            cout << "Invalid input, enter the number for what cipher you want to do" << endl;
+        }
+    }
+    /*
     if (cipher == "1") {
+        while(mode != "ENCRYPT" || mode != "DECRYPT") {
+            cout << "Choose a mode: Encrypt or Decrypt" << endl;
+            getline(cin, mode);
+            transform(mode.begin(), mode.end(), mode.begin(), ::toupper);
+            if(mode == "ENCRYPT" || mode == "DECRYPT") {
+                cout << "What is your key?" << endl;
+                getline(cin, key1);
+                if (!is_valid_message(key1)) {
+                    cout << "Invalid key. The key must be an uppercase letter (A-Z) or a space." << endl;
+                }
+                key = string_to_index(key1);
+                cout << "What is your message?" << endl;
+                getline(cin, input);
+                input = to_uppercase(input);
+                if (!is_valid_message(input)) {
+                    cout << "Invalid message. Only letters (A-Z) and spaces are allowed." << endl;
+                }
+                if(mode == "ENCRYPT"){
+                    string ciphertext = caesar_encrypt(input, key);
+                    cout << "Key: " << key1 << "\nCiphertext: " << ciphertext << "\n";
+                }
+                else if(mode == "DECRYPT"){
+                    string plaintext = caesar_decrypt(input, key);
+                    cout << "Key: " << key1 << "\nPlaintext: " << plaintext << "\n";
+                }
+            }
+            else{
+                cout << "Invalid mode, use ENCRYPT or DECRYPT" << std::endl;
+            }
+        }
+        
         cout << "Do you want to encrypt or decrypt?" << endl;
         //cin >>mode;
         getline(cin, mode);
@@ -128,24 +249,17 @@ int main(int argc, char *argv[]) {
             cout << "Invalid mode, use encrypt or decrypt" << std::endl;
         }
     }
-    
-    if (cipher == "3") {
+    */
+    /*
+    if (cipher == 3) {
     
         while (mode != "ENCRYPT" || mode != "DECRYPT" || mode != "TEST") {
             cout << "Choose a mode: Encrypt, Decrypt, or Test?" << endl;
             getline(cin, mode);
             transform(mode.begin(), mode.end(), mode.begin(), ::toupper);
-            if(mode == "TEST")
-            {
-                test_main();
-                break;
-            }
-            if(mode == "ENCRYPT" || mode == "DECRYPT")
-            {
+            if(mode == "ENCRYPT" || mode == "DECRYPT" || mode == "TEST")
                 input = checkMessage();
                 otp_main(mode, input);
-                break;
-            }
             else
             {
                 cout << "Invalid mode: Enter Encrypt, Decrypt, or Test" << std::endl;
@@ -153,47 +267,6 @@ int main(int argc, char *argv[]) {
         }
 
     }
-    
-    
+    */
     return 0;
-}
-
-string checkMessage(){
-    fstream fin;
-    string message;
-    // controls continuation of error checking for loop
-    // check is set to false initially to enter the for loop
-    bool check = false;
-    while (check == false)
-    {
-        // check is changed to true so the while loop can exit if all characters in the message are valid
-        check = true;
-        // user prompted for the message they wish to encrypt/decrypt
-        printf("Enter a message: ");
-        // input gotten from terminal
-        getline(cin, message);
-        // make all character in the message uppercase
-        transform(message.begin(), message.end(), message.begin(), ::toupper);
-
-        // chech each character to ensure it is a letter or a space
-        for (int i = 0; i < message.length(); i++)
-        {
-            // if the character is not a letter or space
-            if (!isalpha(message[i]) && !isspace(message[i]))
-            {
-                // check is changed to false continuing the while loop and re-prompting the user
-                check = false;
-                // error message is given
-                printf("You can only use alphabetical letters and spaces.\n");
-                // break from for loop
-                break;
-            }
-        }
-    }
-    // the user entered message is written into file 'Message.txt'
-    ofstream Message("Message.txt");
-    Message << message;
-    Message.close();
-
-    return message;
 }
