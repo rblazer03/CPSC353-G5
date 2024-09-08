@@ -3,10 +3,15 @@
 #include <cctype>
 
 // Convert a string to uppercase and handle spaces
+
 std::string to_uppercase(const std::string &text) {
     std::string result;
     for (char c : text) {
+        if (c != ' '){
+
+        
         result += std::toupper(c);
+        }
     }
     return result;
 }
