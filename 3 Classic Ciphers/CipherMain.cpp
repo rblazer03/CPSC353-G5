@@ -1,6 +1,7 @@
 #include <iostream>
 #include <string>
 #include <cctype>
+#include <fstream>
 #include "CeasarCipher.cpp"
 #include "Vigenère_Cipher.cpp"
 
@@ -18,39 +19,41 @@ bool is_valid_message(const string &text) {
     return true;
 }
 
-bool is_valid_key(char key) {
-    return (isupper(key) || key == ' ');
-}
 
 
 int main(int argc, char *argv[]) {
     string mode, input, multiKey;
-    char key1;
+    string key1;
     int key;
-    int cipher;
+    string cipher;
 
     cout << "What Cipher do you want to do?" << endl;
     cout << "1. Caesar Cipher" << endl;
     cout << "2. Vigenère_Cipher" << endl;
     cout << "3. One Time Pad" << endl;
-    cin >> cipher;
+    getline(cin, cipher);
+    //cin >> cipher;
+    //getline(cin, cipher);
 
-    if (cipher == 1) {
+    if (cipher == "1") {
         cout << "Do you want to encrypt or decrypt?" << endl;
-        cin >> mode;
+        //cin >>mode;
+        getline(cin, mode);
         if (mode == "encrypt") {
             cout << "What is your key?" << endl;
-            cin >> key1;
-            if (!is_valid_key(key1)) {
+            //cin >> key1;
+            getline(cin, key1);
+            if (!is_valid_message(key1)) {
                 cout << "Invalid key. The key must be an uppercase letter (A-Z) or a space." << endl;
                 return 1;
             }
-            key = char_to_index(key1);
+            key = string_to_index(key1);
             cout << "What is your message?" << endl;
-            cin >> input;
+            //cin >> input;
+            getline(cin, input);
             input = to_uppercase(input);
             if (!is_valid_message(input)) {
-                cout << "Invalid message. Only uppercase letters (A-Z) and spaces are allowed." << endl;
+                cout << "Invalid message. Only letters (A-Z) and spaces are allowed." << endl;
                 return 1;
             }
             string ciphertext = caesar_encrypt(input, key);
@@ -58,11 +61,11 @@ int main(int argc, char *argv[]) {
         }else if (mode == "decrypt") {
             cout << "What is your key" << endl;
             cin >> key1;
-            if (!is_valid_key(key1)) {
+            if (!is_valid_message(key1)) {
                 cout << "Invalid key. The key must be an uppercase letter (A-Z) or a space." << endl;
                 return 1;
             }
-            key = char_to_index(key1);
+            key = string_to_index(key1);
             cout << "what is your message" << endl;
             cin >> input;
             if (!is_valid_message(input)) {
@@ -76,19 +79,20 @@ int main(int argc, char *argv[]) {
         }
     }
     
-    if (cipher == 2) {
+    if (cipher == "2") {
         cout << "Do you want to encrypt or decrypt?" << endl;
-        cin >> mode;
+        getline(cin, mode);
         if (mode == "encrypt") {
             cout << "What is your key?" << endl;
-            cin >> multiKey;
+            getline(cin, multiKey);
             multiKey = to_uppercase(multiKey);
             if (!is_valid_message(input)) {
                 cout << "Invalid key. Only uppercase letters (A-Z) and spaces are allowed." << endl;
                 return 1;
             }
             cout << "What is your message?" << endl;
-            cin >> input;
+            //cin >> input;
+            getline(cin, input);
             input = to_uppercase(input);
             if (!is_valid_message(input)) {
                 cout << "Invalid message. Only uppercase letters (A-Z) and spaces are allowed." << endl;
@@ -110,7 +114,6 @@ int main(int argc, char *argv[]) {
             input = to_uppercase(input);
             if (!is_valid_message(input)) {
                 cout << "Invalid message. Only uppercase letters (A-Z) and spaces are allowed." << endl;
-                return 1;
             }
             string plaintext = vig_decryption(input, multiKey);
             cout << "Key: " << multiKey << "\nPlaintext: " << plaintext << "\n";           

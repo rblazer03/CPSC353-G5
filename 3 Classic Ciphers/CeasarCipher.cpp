@@ -1,43 +1,42 @@
 #include <iostream>
 #include <string>
 #include <cctype>
+#include <fstream>
 
 // Convert a string to uppercase and handle spaces
 
 std::string to_uppercase(const std::string &text) {
     std::string result;
     for (char c : text) {
-        if (c != ' '){
-
-        
-        result += std::toupper(c);
+        if (c == ' ') {
+            result += ' ';  // Preserve spaces
+        } else {
+            result += std::toupper(c);
         }
     }
     return result;
 }
 
-// Map characters to their position
-int char_to_index(char c) {
-    if (c == ' ') return 26; // I'd give this return statement its own line
-    return c - 'A';
+// Map a single-character string to its corresponding index
+int string_to_index(const std::string &s) {
+    if (s == " ") return 26; // Map space to 26
+    return s[0] - 'A';
 }
 
-// Function to map positions back to characters
-char index_to_char(int index) {
-    if (index == 26) return ' '; // I'd give this return statement its own line
-    return 'A' + index;     
+// Convert an index back to a string (character)
+std::string index_to_string(int index) {
+    if (index == 26) return " "; // Map 26 back to space
+    return std::string(1, 'A' + index);
 }
 
 // Function to encrypt text using the Caesar Cipher
 std::string caesar_encrypt(const std::string &plaintext, int shift) {
     std::string ciphertext;
-    for (char c : plaintext) {
-        // Convert character to index
-        int index = char_to_index(c);             
-        // Shift index and wrap around using modulo 27     
-        int shifted_index = (index + shift) % 27;      
-        // Convert back to character
-        ciphertext += index_to_char(shifted_index);     
+    for (size_t i = 0; i < plaintext.length(); i++) {
+        std::string current_char(1, plaintext[i]);  // Convert character to string
+        int index = string_to_index(current_char);
+        int shifted_index = (index + shift) % 27;
+        ciphertext += index_to_string(shifted_index);
     }
     return ciphertext;
 }
@@ -45,10 +44,11 @@ std::string caesar_encrypt(const std::string &plaintext, int shift) {
 // Function to decrypt text using the Caesar Cipher, same logic as encrypt but reversed
 std::string caesar_decrypt(const std::string &ciphertext, int shift) {
     std::string plaintext;
-    for (char c : ciphertext) {
-        int index = char_to_index(c);  
-        int shifted_index = (index - shift + 27) % 27; 
-        plaintext += index_to_char(shifted_index);      
+    for (size_t i = 0; i < ciphertext.length(); i++) {
+        std::string current_char(1, ciphertext[i]); // Convert character to string
+        int index = string_to_index(current_char);
+        int shifted_index = (index - shift + 27) % 27;
+        plaintext += index_to_string(shifted_index);
     }
     return plaintext;
 }
