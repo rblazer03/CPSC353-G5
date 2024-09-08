@@ -3,7 +3,6 @@
 #include <string>
 #include <algorithm> // for using transform 
 #include <cctype> // for using toupper
-#include "one_time_pad_tests.cpp" 
 using namespace std;
 
 // function initializers
