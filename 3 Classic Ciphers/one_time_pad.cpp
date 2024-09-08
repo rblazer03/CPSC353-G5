@@ -6,8 +6,8 @@
 using namespace std;
 
 // function initializers
-void Encrypt(string message, string key);
-void Decrypt(string message, string key);
+string Encrypt(string message, string key);
+string Decrypt(string message, string key);
 
 int main(int argc, char* argv[])
 {
@@ -122,7 +122,7 @@ int main(int argc, char* argv[])
     return 0;
 }
 
-void Encrypt(string message, string key)
+string Encrypt(string message, string key)
 {
     // open file 'Encrypt.txt'
     ofstream Encrypt("Encrypt.txt");
@@ -160,9 +160,12 @@ void Encrypt(string message, string key)
     // the encrypted message is printed to the terminal
     printf("Encrypted Message: %s\n", encrypted.c_str());
     Encrypted.close();
+
+    // return encrypted method
+    return encrypted;
 }
 
-void Decrypt(string message, string key)
+string Decrypt(string message, string key)
 {
     ofstream Decrypt("Decrypt.txt");
     for (int i = 0; i < message.length(); i++)
@@ -199,4 +202,7 @@ void Decrypt(string message, string key)
     // the decrypted message is printed to the terminal
     printf("Decrypted Message: %s\n", decrypted.c_str());
     Decrypted.close();
+
+    // return decrypted message
+    return decrypted;
 }
