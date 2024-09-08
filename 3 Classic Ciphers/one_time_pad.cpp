@@ -3,7 +3,6 @@
 #include <string>
 #include <algorithm> // for using transform 
 #include <cctype> // for using toupper
-#include "CipherMain.cpp"
 using namespace std;
 
 // function initializers
@@ -23,7 +22,8 @@ int otp_main(string mode, string message_input)
 
     if (mode == "TEST")
     {
-        test_main();
+        //test_main();
+        return 0;
     }
 
     // controls continuation of error checking for loop

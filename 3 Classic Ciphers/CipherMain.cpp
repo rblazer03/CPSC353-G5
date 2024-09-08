@@ -6,8 +6,11 @@
 #include <cctype> // for using toupper
 #include "CeasarCipher.cpp"
 #include "Vigenère_Cipher.cpp"
+#include "one_time_pad.cpp"
 
 using namespace std;
+
+string checkMessage(void);
 
 bool is_valid_message(const string &text) {
     for (char c : text) {
@@ -124,16 +127,24 @@ int main(int argc, char *argv[]) {
             cout << "Invalid mode, use encrypt or decrypt" << std::endl;
         }
     }
-    /*
-    if (cipher == 3) {
+    
+    if (cipher == "3") {
     
         while (mode != "ENCRYPT" || mode != "DECRYPT" || mode != "TEST") {
             cout << "Choose a mode: Encrypt, Decrypt, or Test?" << endl;
             getline(cin, mode);
             transform(mode.begin(), mode.end(), mode.begin(), ::toupper);
-            if(mode == "ENCRYPT" || mode == "DECRYPT" || mode == "TEST")
+            if(mode == "TEST")
+            {
+                otp_main(mode,"");
+                break;
+            }
+            if(mode == "ENCRYPT" || mode == "DECRYPT")
+            {
                 input = checkMessage();
                 otp_main(mode, input);
+                break;
+            }
             else
             {
                 cout << "Invalid mode: Enter Encrypt, Decrypt, or Test" << std::endl;
@@ -141,7 +152,7 @@ int main(int argc, char *argv[]) {
         }
 
     }
-    */
+    
     
     return 0;
 }
@@ -182,4 +193,6 @@ string checkMessage(){
     ofstream Message("Message.txt");
     Message << message;
     Message.close();
+
+    return message;
 }
