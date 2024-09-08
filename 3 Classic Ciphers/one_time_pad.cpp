@@ -20,46 +20,6 @@ int otp_main(string mode, string message_input)
     string key;
     string choice = mode;
 
-    if (mode == "TEST")
-    {
-        //test_main();
-        return 0;
-    }
-
-    // controls continuation of error checking for loop
-    // check is set to false initially to enter the for loop
-    // bool check = false;
-    // while (check == false)
-    // {
-    //     // check is changed to true so the while loop can exit if all characters in the message are valid
-    //     check = true;
-    //     // user prompted for the message they wish to encrypt/decrypt
-    //     printf("Enter a message: ");
-    //     // input gotten from terminal
-    //     getline(cin, message);
-    //     // make all character in the message uppercase
-    //     transform(message.begin(), message.end(), message.begin(), ::toupper);
-
-    //     // chech each character to ensure it is a letter or a space
-    //     for (int i = 0; i < message.length(); i++)
-    //     {
-    //         // if the character is not a letter or space
-    //         if (!isalpha(message[i]) && !isspace(message[i]))
-    //         {
-    //             // check is changed to false continuing the while loop and re-prompting the user
-    //             check = false;
-    //             // error message is given
-    //             printf("You can only use alphabetical letters and spaces.\n");
-    //             // break from for loop
-    //             break;
-    //         }
-    //     }
-    // }
-    // the user entered message is written into file 'Message.txt'
-    // ofstream Message("Message.txt");
-    // Message << message;
-    // Message.close();
-
     // controls continuation of error checking for loop
     // check is set to false initially to enter the for loop
     bool check2 = false;
@@ -112,7 +72,6 @@ int otp_main(string mode, string message_input)
     // encrypt of decrypt the message based on user choice
     if (choice == "ENCRYPT")
     {
-
         Encrypt(message, key);
     }
     else if (choice == "DECRYPT")
