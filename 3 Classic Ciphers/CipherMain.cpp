@@ -7,6 +7,7 @@
 #include "CeasarCipher.cpp"
 #include "Vigenère_Cipher.cpp"
 #include "one_time_pad.cpp"
+#include "one_time_pad_tests.cpp"
 
 using namespace std;
 
@@ -136,7 +137,7 @@ int main(int argc, char *argv[]) {
             transform(mode.begin(), mode.end(), mode.begin(), ::toupper);
             if(mode == "TEST")
             {
-                otp_main(mode,"");
+                test_main();
                 break;
             }
             if(mode == "ENCRYPT" || mode == "DECRYPT")

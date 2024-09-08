@@ -112,6 +112,7 @@ int otp_main(string mode, string message_input)
     // encrypt of decrypt the message based on user choice
     if (choice == "ENCRYPT")
     {
+
         Encrypt(message, key);
     }
     else if (choice == "DECRYPT")

@@ -1,6 +1,5 @@
 #include <iostream>
 #include <string>
-#include "one_time_pad.cpp"
 using namespace std;
 
 void test_otp_encrypt(void);
@@ -19,7 +18,7 @@ int test_main(void)
 
 void test_otp_encrypt()
 {   
-    string encrypted = Encrypt("Hello World", "TestEncrypt");
+    string encrypted = Encrypt("HELLO WORLD", "TESTENCRYPT");
     if (encrypted == " ICDSMYEO W")
     {
         cout << "One Time Pad Encrypt: " << valid << endl;
@@ -34,8 +33,8 @@ void test_otp_encrypt()
 
 void test_otp_decrypt()
 {   
-    string decrypted = Decrypt("Hello World", " ICDRDYEO W");
-    if ( decrypted == "TestDecrypt")
+    string decrypted = Decrypt(" ICDRDYEO W", "HELLO WORLD");
+    if ( decrypted == "TESTDECRYPT")
     {
         cout << "One Time Pad Decrypt: " << valid << endl;
     }
