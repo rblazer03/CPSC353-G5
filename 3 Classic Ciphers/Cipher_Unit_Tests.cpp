@@ -1,11 +1,11 @@
 #include <iostream>
 #include <string>
+#include <algorithm> // for using transform 
 #include "CeasarCipher.cpp"
 #include "Vigenère_Cipher.cpp"
 #include "one_time_pad.cpp"
 using namespace std;
 
-// Checking for letters and handling them correctly if they are lowercase is handled all in main through reprompts
 // This checks to make sure the actual cipher functions are working properly.
 
 // Testing for valid  Ceasar Encryption
@@ -13,7 +13,7 @@ void test_ceasar_encryption() {
     string valid_encryption = "Encryption Passed";
     cout<< "Encryption Test: ";
 
-    if(caesar_encrypt("JOHNSON IS PEDANTIC", 'J') != "CHAGLHGTBLTIYXUGMBW") {
+    if(caesar_encrypt("JOHNSON IS PEDANTIC", "J") != "SXQWAXWIRAIYNMJWBRL") {
         valid_encryption = "Encryption Failed";
     }
     
@@ -25,8 +25,8 @@ void test_ceasar_decryption() {
     string valid_decryption = "Decryption Passed";
     cout<< "Decryption Test: ";
 
-    if(caesar_decrypt("CHAGLHGTBLTIYXUGMBW", 'J') != "JOHNSON IS PEDANTIC") {
-        cout << caesar_decrypt("CHAGLHGTBLTIYXUGMBW", 'J') << endl;
+    if(caesar_decrypt("SXQWAXWIRAIYNMJWBRL", "J") != "JOHNSON IS PEDANTIC") {
+        cout << caesar_decrypt("SXQWAXWIRAIYNMJWBRL", "J") << endl;
         valid_decryption = "Decryption Failed";
     }
     
@@ -76,15 +76,13 @@ void test_otp_decrypt() {
     string valid = "Decryption Passed";
     cout << "Decryption Test: ";
 
-    string decrypted = Decrypt("HELLO WORLD", " ICDRDYEO W");
-    if ( decrypted != "TestDecrypt") {
-        valid = "Decryptiong Failed";
+    string decrypted = Decrypt(" ICDSMYEO W", "TESTENCRYPT");
+    if (decrypted != "HELLO WORLD") {
+        valid = "Decrypting Failed";
     }
 
     cout << valid << endl;
 }
-
-
 
 int main(void) {
     cout<< "Unit Testing For Ceasar Cipher:" << endl;

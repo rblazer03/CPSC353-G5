@@ -9,16 +9,13 @@ using namespace std;
 string Encrypt(string message, string key);
 string Decrypt(string message, string key);
 
-int otp_main(string mode, string message_input)
-{
+int otp(string mode, string message_input) {
     // reading and writing to files
     fstream fin;
     fstream fout;
     
     // initalizer for the user inputed message and key
-    string message = message_input;
     string key;
-    string choice = mode;
 
     // controls continuation of error checking for loop
     // check is set to false initially to enter the for loop
@@ -34,29 +31,25 @@ int otp_main(string mode, string message_input)
         // make all character in the key uppercase
         transform(key.begin(), key.end(), key.begin(), ::toupper);
 
-        // while loop to re-prompt user if key is not the same length as the message
-        while (key.length() != message.length())
-        {
-            // error message given
-            printf("Key must be equal to message length.\n");
-            // user re-prompted
-            printf("Enter a key: ");
-            getline(cin, key);
-            transform(key.begin(), key.end(), key.begin(), ::toupper);
+        if(key.length() != message_input.length()) {
+            check2 = false;
+            cout<< "Key must be equal in length to message" << endl;
         }
         
         // chech each character to ensure it is a letter or a space
-        for (int i = 0; i < key.length(); i++)
-        {
-            // if the character is not a letter or space
-            if (!isalpha(key[i]) && !isspace(key[i]))
+        if(check2 == true) {
+            for (int i = 0; i < key.length(); i++)
             {
-                // check2 is changed to false continuing the while loop and re-prompting the user
-                check2 = false;
-                // error message is given
-                printf("You can only use alphabetical letters and spaces.\n");
-                // break from for loop
-                break;
+                // if the character is not a letter or space
+                if (!isalpha(key[i]) && !isspace(key[i]))
+                {
+                    // check2 is changed to false continuing the while loop and re-prompting the user
+                    check2 = false;
+                    // error message is given
+                    printf("You can only use alphabetical letters and spaces.\n");
+                    // break from for loop
+                    break;
+                }
             }
         }
     }
@@ -65,19 +58,26 @@ int otp_main(string mode, string message_input)
     Key << key;
     Key.close();
 
-    // users original message and chosen key is printed in the terminal
-    printf("Original Message: %s\n", message.c_str());
-    printf("Key: %s\n", key.c_str());
-
     // encrypt of decrypt the message based on user choice
-    if (choice == "ENCRYPT")
-    {
-        Encrypt(message, key);
+    if (mode == "ENCRYPT") {
+        cout << "-----OTP Cipher-----" << endl;
+        cout << "Original Message: " + message_input << endl;
+        cout << "Key: " + key << endl;
+        string cypherText = Encrypt(message_input, key);
+        cout << "Encrypted Message: " + cypherText << endl;
+        ofstream Encrypt("Encrypt.txt");
+        Encrypt << cypherText;
+        Encrypt.close();
     }
-    else if (choice == "DECRYPT")
-    {
-        Decrypt(message, key);
-    
+    else if (mode == "DECRYPT") {
+        cout << "-----OTP Cipher-----" << endl;
+        cout << "Original Message: " + message_input << endl;
+        cout << "Key: " + key << endl;
+        string plainText = Decrypt(message_input, key);
+        cout << "Encrypted Message: " + plainText << endl;
+        ofstream Decrypt("Decrypt.txt");
+        Decrypt << plainText;
+        Decrypt.close();
     }
 
     return 0;
@@ -85,6 +85,7 @@ int otp_main(string mode, string message_input)
 
 string Encrypt(string message, string key)
 {
+    string encrypt;
     // open file 'Encrypt.txt'
     ofstream Encrypt("Encrypt.txt");
     // encrypt each letter of the message individually
@@ -108,27 +109,16 @@ string Encrypt(string message, string key)
             newChar -= 59;
         }
         // encrypted character is added to the file 'Encrypt.txt'
-        Encrypt << newChar;
+        encrypt += newChar;
     }
-    Encrypt.close();
-
-    // initilaizer for encrypted text
-    string encrypted;
-    // 'Encrypt.txt' is opened
-    ifstream Encrypted("Encrypt.txt");
-    // the first line of the file is read and the saved to string encrypted
-    getline(Encrypted, encrypted);
-    // the encrypted message is printed to the terminal
-    printf("Encrypted Message: %s\n", encrypted.c_str());
-    Encrypted.close();
-
+    
     // return encrypted method
-    return encrypted;
+    return encrypt;
 }
 
 string Decrypt(string message, string key)
 {
-    ofstream Decrypt("Decrypt.txt");
+    string decrypt;
     for (int i = 0; i < message.length(); i++)
     {
         // if the character is a space, 59 (ascii value) is added to make the space sit after 'Z' for decryption
@@ -150,20 +140,8 @@ string Decrypt(string message, string key)
             newChar -= 59;
         }
         // decrypted character is added to the file 'Encrypt.txt'
-        Decrypt << newChar;
+        decrypt +=  newChar;
     }
-    Decrypt.close();
-
-    // initilaizer for decrypted text
-    string decrypted;
-    // 'Decrypt.txt' is opened
-    ifstream Decrypted("Decrypt.txt");
-    // the first line of the file is read and the saved to string decrypted
-    getline(Decrypted, decrypted);
-    // the decrypted message is printed to the terminal
-    printf("Decrypted Message: %s\n", decrypted.c_str());
-    Decrypted.close();
-
     // return decrypted message
-    return decrypted;
+    return decrypt;
 }

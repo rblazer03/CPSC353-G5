@@ -3,90 +3,125 @@
 #include <cctype>
 #include <fstream>
 
+using namespace std;
 // Convert a string to uppercase and handle spaces
 
-std::string to_uppercase(const std::string &text) {
-    std::string result;
-    for (char c : text) {
-        if (c == ' ') {
-            result += ' ';  // Preserve spaces
-        } else {
-            result += std::toupper(c);
-        }
-    }
-    return result;
-}
-
-// Map a single-character string to its corresponding index
-int string_to_index(const std::string &s) {
-    if (s == " ") return 26; // Map space to 26
-    return s[0] - 'A';
-}
-
-// Convert an index back to a string (character)
-std::string index_to_string(int index) {
-    if (index == 26) return " "; // Map 26 back to space
-    return std::string(1, 'A' + index);
-}
-
 // Function to encrypt text using the Caesar Cipher
-std::string caesar_encrypt(const std::string &plaintext, int shift) {
-    std::string ciphertext;
-    for (size_t i = 0; i < plaintext.length(); i++) {
-        std::string current_char(1, plaintext[i]);  // Convert character to string
-        int index = string_to_index(current_char);
-        int shifted_index = (index + shift) % 27;
-        ciphertext += index_to_string(shifted_index);
+string caesar_encrypt(string plaintext, string shift) {
+    string ciphertext;
+    char key_shift = shift[0];
+    //goes through entire message
+    for (int i = 0; i < plaintext.length(); i++) {
+        char plain_letter = plaintext[i];
+        char shifted_index;
+        if(plain_letter == ' ')  {
+            shifted_index = ((26 + (key_shift - 'A')) % 27) + 'A';
+        } else {
+            shifted_index = ((plain_letter - 'A') + (key_shift - 'A')) % 27 + 'A';
+        }
+
+        // special case
+        if(shifted_index == '[') {
+            shifted_index = ' ';
+        }
+        ciphertext += shifted_index;
     }
     return ciphertext;
 }
 
 // Function to decrypt text using the Caesar Cipher, same logic as encrypt but reversed
-std::string caesar_decrypt(const std::string &ciphertext, int shift) {
-    std::string plaintext;
-    for (size_t i = 0; i < ciphertext.length(); i++) {
-        std::string current_char(1, ciphertext[i]); // Convert character to string
-        int index = string_to_index(current_char);
-        int shifted_index = (index - shift + 27) % 27;
-        plaintext += index_to_string(shifted_index);
+string caesar_decrypt(string ciphertext, string shift) {
+    string plaintext;
+    char key_shift = shift[0];
+
+    // goes through entire cipher text
+    for (int i = 0; i < ciphertext.length(); i++) {
+        char cipher_letter = ciphertext[i];
+        char shifted_index;
+        if(cipher_letter == ' ')  {
+            shifted_index = (26 - (key_shift - 'A') % 27) + 'A';
+        } else {
+            shifted_index = ((cipher_letter - 'A') - (key_shift - 'A') + 27) % 27 + 'A';
+        }
+
+        // special case
+        if(shifted_index == '[') {
+            shifted_index = ' ';
+        }
+        plaintext += shifted_index;
     }
     return plaintext;
 }
 
-/*
+void ceasar(string mode, string message_input) {
+    // reading and writing to files
+    fstream fin;
+    fstream fout;
+    
+    // initalizer for the user inputed message and key
+    string key;
 
-int main(int argc, char *argv[]) {
-    std::string mode, input;
-    int shift;
+    // controls continuation of error checking for loop
+    // check is set to false initially to enter the for loop
+    bool check2 = false;
+    while (check2 == false)
+    {
+        // check is changed to true so the while loop can exit if all characters in the message are valid
+        check2 = true;
+        // user is prompted to for the key they want to use for encryting/decrypting
+        printf("Enter a key: ");
+        //input gotten from terminal
+        getline(cin, key);
+        // make all character in the key uppercase
+        transform(key.begin(), key.end(), key.begin(), ::toupper);
 
-    // Check command-line arguments
-    if (argc < 4) {
-        std::cout << "Usage: " << argv[0] << " <mode> <text> <shift>\n";
-        std::cout << "Mode: encrypt or decrypt\n";
-        return 1;
+        if(key.length()!= 1) {
+            check2 = false;
+            cout<< "Key must be a single letter" << endl;
+        }
+        
+        // chech each character to ensure it is a letter or a space
+        if(check2 == true) {
+            for (int i = 0; i < key.length(); i++)
+            {
+                // if the character is not a letter or space
+                if (!isalpha(key[i]))
+                {
+                    // check2 is changed to false continuing the while loop and re-prompting the user
+                    check2 = false;
+                    // error message is given
+                    printf("You can only use alphabetical letters.\n");
+                    // break from for loop
+                    break;
+                }
+            }
+        }
     }
+    // the user entered key is written into file 'Key.txt'
+    ofstream Key("Key.txt");
+    Key << key;
+    Key.close();
 
-    // Read mode, input text, and shift value
-    mode = argv[1];
-    input = to_uppercase(argv[2]);
-    shift = std::stoi(argv[3]);
-
-    // Ensure shift is within valid range
-    if (shift < 0 || shift > 26) {
-        std::cout << "Shift must be between 0 and 26 (A-Z + _)" << std::endl;
+    // encrypt of decrypt the message based on user choice
+    // output messages and keys to files
+    if (mode == "ENCRYPT") {
+        cout << "-----Ceasar Cipher-----" << endl;
+        cout << "Original Message: " + message_input << endl;
+        cout << "Key: " + key << endl;
+        string cypherText = caesar_encrypt(message_input, key);
+        cout << "Encrypted Message: " + cypherText << endl;
+        ofstream Encrypt("Encrypt.txt");
+        Encrypt << cypherText;
+        Encrypt.close();
     }
-
-    // Execute based on selected mode
-    if (mode == "encrypt") {
-        std::string ciphertext = caesar_encrypt(input, shift);
-        std::cout << "Key: " << shift << "\nCiphertext: " << ciphertext << "\n";
-    } else if (mode == "decrypt") {
-        std::string plaintext = caesar_decrypt(input, shift);
-        std::cout << "Key: " << shift << "\nPlaintext: " << plaintext << "\n";
-    } else {
-        std::cout << "Invalid mode, use encrypt or decrypt" << std::endl;
+    else if (mode == "DECRYPT") {
+        cout << "-----Ceasar Cipher-----" << endl;
+        cout << "Original Message: " + message_input << endl;
+        cout << "Key: " + key << endl;
+        string plainText = caesar_decrypt(message_input, key);
+        cout << "Decrypted Message: " + plainText << endl;
+        ofstream Decrypt("Decrypt.txt");
+        Decrypt << plainText;
+        Decrypt.close();
     }
-
-    return 0;
 }
-*/
