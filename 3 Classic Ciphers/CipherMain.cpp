@@ -85,6 +85,7 @@ int main(int argc, char *argv[]) {
         mode_cond = false;
         cout << "Choose a mode: ENCRYPT or DECRYPT" << endl;
         getline(cin, mode);
+        transform(mode.begin(), mode.end(), mode.begin(), ::toupper);
         if(mode != "ENCRYPT" && mode != "DECRYPT") {
             cout << "Please type either ENCRYPT or DECRYPT" <<endl;
             cout<< mode << endl;
