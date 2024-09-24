@@ -5,7 +5,7 @@
 #include <algorithm> // for using transform 
 #include <cctype> // for using toupper
 #include "CeasarCipher.cpp"
-#include "Vigenère_Cipher.cpp"
+#include "Vigenere_Cipher.cpp"
 #include "one_time_pad.cpp"
 
 using namespace std;

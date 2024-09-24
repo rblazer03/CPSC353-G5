@@ -2,30 +2,39 @@
 // CPSC 353
 #include <iostream>
 #include <string>
+#include <algorithm>
+#include <fstream>
 
 using namespace std;
-
 
 // encryption useing inputting key 
 string vig_encryption(string plainText, string key){
     string cypherText;
     // goes through entire message encrypting it
     for(int i=0;i<plainText.length();i++){
-        char x = plainText[i];
-        char y = key[(i % key.length())];
-        char z;
-        
-        if(x==' '){
-            z = ((26+(y-'A')) % 27) + 'A';
-        } else {
-            z = ((x-'A')+(y-'A')) % 27 + 'A';
+        char message_char = plainText[i];
+        char key_char = key[(i % key.length())];
+        char cyphertext_char;
+
+        //handles spaces
+        if(message_char ==' '){
+            message_char = '[';
+        } 
+
+        // handles spaces
+        if(key_char ==' ') {
+            key_char = '[';
+        }
+        // computes cyphertext
+        cyphertext_char = ((message_char-'A')+(key_char-'A')) % 27 + 'A';
+
+        // handles spaces
+        if(cyphertext_char == '[') {
+            cyphertext_char = ' ';
         }
 
-        if(z == '[') {
-            z = ' ';
-        }
-        
-        cypherText+=z;
+        //appends it to string
+        cypherText+=cyphertext_char;
     }
     return cypherText;
 }
@@ -35,21 +44,30 @@ string vig_decryption(string cypherText, string key){
     string plainText;
     // goes through message and encrypts it
     for(int i=0;i<cypherText.length();i++){
-        char x = cypherText[i];
-        char y = key[(i % key.length())];
-        char z;
+        char cyphertext_char = cypherText[i];
+        char key_char = key[(i % key.length())];
+        char message_char;
 
-        if(x==' '){
-            z = ((26-(y-'A')) % 27) + 'A';
-        } else {
-            z = (((x-'A')-(y-'A')+27) % 27) + 'A';
+        // handles spaces
+        if(cyphertext_char ==' '){
+           cyphertext_char = '[';
         }
 
-        if(z == '[') {
-            z = ' ';
+        // handles spaces
+        if(key_char==' ') {
+            key_char = '[';
         }
-        
-        plainText+=z;
+
+        // computes secret message
+        message_char = (((cyphertext_char-'A')-(key_char-'A')+27) % 27) + 'A';
+
+        // handles spaces
+        if(message_char == '[') {
+            message_char = ' ';
+        }
+
+        // appends it to string
+        plainText+=message_char;
     }
     return plainText;
 }

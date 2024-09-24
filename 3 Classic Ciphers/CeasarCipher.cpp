@@ -2,6 +2,7 @@
 #include <string>
 #include <cctype>
 #include <fstream>
+#include <algorithm>
 
 using namespace std;
 // Convert a string to uppercase and handle spaces
