@@ -22,7 +22,7 @@ string checkMessage(){
         // check is changed to true so the while loop can exit if all characters in the message are valid
         check = true;
         // user prompted for the message they wish to encrypt/decrypt
-        printf("Enter a message: ");
+        cout << "Enter a message: " << endl;
         // input gotten from terminal
         getline(cin, message);
         // make all character in the message uppercase
@@ -37,7 +37,7 @@ string checkMessage(){
                 // check is changed to false continuing the while loop and re-prompting the user
                 check = false;
                 // error message is given
-                printf("You can only use alphabetical letters and spaces.\n");
+                cout << "You can only use alphabetical letters and spaces." << endl;
                 // break from for loop
                 break;
             }
