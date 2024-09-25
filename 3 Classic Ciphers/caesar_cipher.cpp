@@ -88,7 +88,8 @@ void caesar(string mode, string message_input) {
         // check is changed to true so the while loop can exit if all characters in the message are valid
         check2 = true;
         // user is prompted to for the key they want to use for encryting/decrypting
-        printf("Enter a key: ");
+        //printf("Enter a key: ");
+        cout << "Enter a key:";
         //input gotten from terminal
         getline(cin, key);
         // make all character in the key uppercase
@@ -109,7 +110,8 @@ void caesar(string mode, string message_input) {
                     // check2 is changed to false continuing the while loop and re-prompting the user
                     check2 = false;
                     // error message is given
-                    printf("You can only use alphabetical letters.\n");
+                    //printf("You can only use alphabetical letters.\n");
+                    cout << "You can only use alphabetical letters." << endl;
                     // break from for loop
                     break;
                 }
