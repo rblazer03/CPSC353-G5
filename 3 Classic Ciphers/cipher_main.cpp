@@ -11,7 +11,7 @@
 using namespace std;
 
 // makes sure the message is legal input
-string checkMessage(){
+string check_message(){
     fstream fin;
     string message;
     // controls continuation of error checking for loop
@@ -95,11 +95,11 @@ int main(int argc, char *argv[]) {
     
     // gets message for encrypting or decrypting
     cout << "What is your message?" << endl;
-    input = checkMessage();
+    input = check_message();
         
     // runs correct cipher
     if(cipher == "1") {
-        ceasar(mode, input);
+        caesar(mode, input);
     }
 
     if (cipher == "2") {
