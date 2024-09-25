@@ -4,7 +4,7 @@
 #include <fstream>
 #include <algorithm> // for using transform 
 #include <cctype> // for using toupper
-#include "ceasar_cipher.cpp"
+#include "caesar_cipher.cpp"
 #include "vigenere_cipher.cpp"
 #include "one_time_pad.cpp"
 
