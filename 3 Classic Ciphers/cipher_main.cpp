@@ -22,7 +22,7 @@ string check_message(){
         // check is changed to true so the while loop can exit if all characters in the message are valid
         check = true;
         // user prompted for the message they wish to encrypt/decrypt
-        cout << "Enter a message: " << endl;
+        cout << "Enter a message: ";
         // input gotten from terminal
         getline(cin, message);
         // make all character in the message uppercase
