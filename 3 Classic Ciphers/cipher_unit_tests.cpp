@@ -1,7 +1,7 @@
 #include <iostream>
 #include <string>
 #include <algorithm> // for using transform 
-#include "ceasar_cipher.cpp"
+#include "caesar_cipher.cpp"
 #include "vigenere_cipher.cpp"
 #include "one_time_pad.cpp"
 using namespace std;
@@ -9,7 +9,7 @@ using namespace std;
 // This checks to make sure the actual cipher functions are working properly.
 
 // Testing for valid  Ceasar Encryption
-void test_ceasar_encryption() {
+void test_caesar_encryption() {
     string valid_encryption = "Encryption Passed";
     cout<< "Encryption Test: ";
 
@@ -21,7 +21,7 @@ void test_ceasar_encryption() {
 }
 
 // Testing for valid Ceasaar Decryption
-void test_ceasar_decryption() {
+void test_caesar_decryption() {
     string valid_decryption = "Decryption Passed";
     cout<< "Decryption Test: ";
 
@@ -86,8 +86,8 @@ void test_otp_decrypt() {
 
 int main(void) {
     cout<< "Unit Testing For Ceasar Cipher:" << endl;
-    test_ceasar_encryption();
-    test_ceasar_decryption();
+    test_caesar_encryption();
+    test_caesar_decryption();
 
     cout<< "Unit Testing For Vignere Cipher:" << endl;
     test_vigenere_encryption();

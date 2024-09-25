@@ -72,7 +72,7 @@ string caesar_decrypt(string ciphertext, string key) {
     return plain_text;
 }
 
-void ceasar(string mode, string message_input) {
+void caesar(string mode, string message_input) {
     // reading and writing to files
     fstream fin;
     fstream fout;
