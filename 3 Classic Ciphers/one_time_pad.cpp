@@ -6,8 +6,8 @@
 using namespace std;
 
 // function initializers
-string Encrypt(string message, string key);
-string Decrypt(string message, string key);
+string encrypt_msg(string message, string key);
+string decrypt_msg(string message, string key);
 
 int otp(string mode, string message_input) {
     // reading and writing to files
@@ -63,7 +63,7 @@ int otp(string mode, string message_input) {
         cout << "-----OTP Cipher-----" << endl;
         cout << "Original Message: " + message_input << endl;
         cout << "Key: " + key << endl;
-        string cypherText = Encrypt(message_input, key);
+        string cypherText = encrypt_msg(message_input, key);
         cout << "Encrypted Message: " + cypherText << endl;
         ofstream Encrypt("Encrypt.txt");
         Encrypt << cypherText;
@@ -73,7 +73,7 @@ int otp(string mode, string message_input) {
         cout << "-----OTP Cipher-----" << endl;
         cout << "Original Message: " + message_input << endl;
         cout << "Key: " + key << endl;
-        string plainText = Decrypt(message_input, key);
+        string plainText = decrypt_msg(message_input, key);
         cout << "Encrypted Message: " + plainText << endl;
         ofstream Decrypt("Decrypt.txt");
         Decrypt << plainText;
@@ -83,7 +83,7 @@ int otp(string mode, string message_input) {
     return 0;
 }
 
-string Encrypt(string message, string key)
+string encrypt_msg(string message, string key)
 {
     string encrypt;
     // open file 'Encrypt.txt'
@@ -116,7 +116,7 @@ string Encrypt(string message, string key)
     return encrypt;
 }
 
-string Decrypt(string message, string key)
+string decrypt_msg(string message, string key)
 {
     string decrypt;
     for (int i = 0; i < message.length(); i++)
