@@ -25,7 +25,7 @@ int otp(string mode, string message_input) {
         // check is changed to true so the while loop can exit if all characters in the message are valid
         check2 = true;
         // user is prompted to for the key they want to use for encryting/decrypting
-        printf("Enter a key: ");
+        cout << "Enter a key: "<< endl;
         //input gotten from terminal
         getline(cin, key);
         // make all character in the key uppercase
@@ -33,7 +33,7 @@ int otp(string mode, string message_input) {
 
         if(key.length() != message_input.length()) {
             check2 = false;
-            cout<< "Key must be equal in length to message" << endl;
+            cout << "Key must be equal in length to message" << endl;
         }
         
         // chech each character to ensure it is a letter or a space
@@ -46,7 +46,7 @@ int otp(string mode, string message_input) {
                     // check2 is changed to false continuing the while loop and re-prompting the user
                     check2 = false;
                     // error message is given
-                    printf("You can only use alphabetical letters and spaces.\n");
+                    cout << "You can only use alphabetical letters and spaces."<< endl;
                     // break from for loop
                     break;
                 }

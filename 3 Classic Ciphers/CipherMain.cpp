@@ -6,7 +6,7 @@
 #include <cctype> // for using toupper
 #include "CeasarCipher.cpp"
 #include "Vigenere_Cipher.cpp"
-#include "one_time_pad.cpp"
+#include "One_Time_Pad.cpp"
 
 using namespace std;
 
