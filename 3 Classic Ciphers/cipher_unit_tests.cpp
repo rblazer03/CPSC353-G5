@@ -63,7 +63,7 @@ void test_otp_encrypt() {
     string valid = "Encryption Passed";
     cout<< "Encryption Test: ";
 
-    string encrypted = Encrypt("HELLO WORLD", "TESTENCRYPT");
+    string encrypted = encrypt_msg("HELLO WORLD", "TESTENCRYPT");
     if (encrypted != " ICDSMYEO W") {
         valid = "Encryption Failed";
     }
@@ -76,7 +76,7 @@ void test_otp_decrypt() {
     string valid = "Decryption Passed";
     cout << "Decryption Test: ";
 
-    string decrypted = Decrypt(" ICDSMYEO W", "TESTENCRYPT");
+    string decrypted = decrypt_msg(" ICDSMYEO W", "TESTENCRYPT");
     if (decrypted != "HELLO WORLD") {
         valid = "Decrypting Failed";
     }
