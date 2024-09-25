@@ -1,8 +1,8 @@
 #include <iostream>
 #include <string>
 #include <algorithm> // for using transform 
-#include "CeasarCipher.cpp"
-#include "Vigenere_Cipher.cpp"
+#include "ceasar_cipher.cpp"
+#include "vigenere_cipher.cpp"
 #include "one_time_pad.cpp"
 using namespace std;
 
