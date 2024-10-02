@@ -84,8 +84,10 @@ void test_otp_decrypt() {
     cout << valid << endl;
 }
 
+
+
 int main(void) {
-    cout<< "Unit Testing For Ceasar Cipher:" << endl;
+    cout<< "Unit Testing For Caesar Cipher:" << endl;
     test_caesar_encryption();
     test_caesar_decryption();
 

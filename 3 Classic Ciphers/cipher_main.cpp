@@ -58,56 +58,69 @@ int main(int argc, char *argv[]) {
     int key;
     bool cipher_cond = true;
     // gets number for respective program
-    while(cipher_cond == true) {
-        cipher_cond = false;
-        cout << "What Cipher do you want to do?" << endl;
-        cout << "1. Caesar Cipher" << endl;
-        cout << "2. Vigenere_Cipher" << endl;
-        cout << "3. One Time Pad" << endl;
-        cout << "4. Exit program" << endl;
-        getline(cin, cipher);
+    bool end_game = false;
 
-        if(cipher != "1" && cipher!= "2" && cipher!= "3" && cipher!= "4") {
-            cipher_cond = true;
-            cout << "Invalid input. Please enter a number 1-4." <<endl;
-        }
-    }
+    while(end_game== false) {
 
-    // exits program
-    if(cipher == "4") {
-        cout << "Goodbye!" << endl;
-        return 0;
-    }
-
-    // gets input for either decryption or encryption
-    bool mode_cond = true;
-    while(mode_cond == true) {
-        mode_cond = false;
-        cout << "Choose a mode: ENCRYPT or DECRYPT" << endl;
-        getline(cin, mode);
-        transform(mode.begin(), mode.end(), mode.begin(), ::toupper);
-        if(mode != "ENCRYPT" && mode != "DECRYPT") {
-            cout << "Please type either ENCRYPT or DECRYPT" <<endl;
-            cout<< mode << endl;
-            mode_cond = true;
-        }
-    }
     
-    // gets message for encrypting or decrypting
-    cout << "What is your message?" << endl;
-    input = check_message();
+
+
+
+        while(cipher_cond == true) {
+            cipher_cond = false;
+            cout << "What Cipher do you want to do?" << endl;
+            cout << "1. Caesar Cipher" << endl;
+            cout << "2. Vigenere_Cipher" << endl;
+            cout << "3. One Time Pad" << endl;
+            cout << "4. Exit program" << endl;
+            getline(cin, cipher);
+
+            if(cipher != "1" && cipher!= "2" && cipher!= "3" && cipher!= "4") {
+                cipher_cond = true;
+                cout << "Invalid input. Please enter a number 1-4." <<endl;
+            }
+        }
+
+        // exits program
+        if(cipher == "4") {
+            cout << "Goodbye!" << endl;
+            end_game = true;
+            return 0;
+        }
+
+        // gets input for either decryption or encryption
+        bool mode_cond = true;
+        while(mode_cond == true) {
+            mode_cond = false;
+            cout << "Choose a mode: ENCRYPT or DECRYPT" << endl;
+            getline(cin, mode);
+            transform(mode.begin(), mode.end(), mode.begin(), ::toupper);
+            if(mode != "ENCRYPT" && mode != "DECRYPT") {
+                cout << "Please type either ENCRYPT or DECRYPT" <<endl;
+                cout<< mode << endl;
+                mode_cond = true;
+            }
+        }
         
-    // runs correct cipher
-    if(cipher == "1") {
-        caesar(mode, input);
-    }
+        // gets message for encrypting or decrypting
+        cout << "What is your message?" << endl;
+        input = check_message();
+            
+        // runs correct cipher
+        if(cipher == "1") {
+            caesar(mode, input);
+        }
 
-    if (cipher == "2") {
-        vigenere(mode, input);
-    }
+        if (cipher == "2") {
+            vigenere(mode, input);
+        }
 
-    if (cipher == "3") {
-        otp(mode, input);      
+        if (cipher == "3") {
+            otp(mode, input);      
+        }
+        cout << "-----------------------" << endl;
+        cout << endl;
+        cipher_cond = true;
     }
     
     return 0;
